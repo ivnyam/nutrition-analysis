@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nutrition Database Analysis</title>
+<style>
+  :root {
+    --bg: #0b0d10;
+    --panel: #14171c;
+    --border: #262b33;
+    --text: #e7e9ec;
+    --muted: #9aa3af;
+    --accent: #5fd1a8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 64px 24px 96px;
+  }
+  header h1 {
+    font-size: 2rem;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  header p {
+    color: var(--muted);
+    margin: 0 0 4px;
+    font-size: 1.05rem;
+  }
+  header .meta {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 16px;
+  }
+  header .meta a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  header .meta a:hover { text-decoration: underline; }
+
+  section.analysis {
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+  section.analysis h2 {
+    font-size: 1.25rem;
+    margin: 0 0 4px;
+  }
+  section.analysis .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  section.analysis p.finding {
+    color: var(--muted);
+    max-width: 68ch;
+  }
+  .visual {
+    margin-top: 20px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .interactive-card {
+    margin-top: 20px;
+    padding: 20px 22px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .interactive-card span {
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .interactive-card a {
+    flex-shrink: 0;
+    color: #0b0d10;
+    background: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 10px 16px;
+    border-radius: 7px;
+  }
+  .interactive-card a:hover { opacity: 0.9; }
+
+  footer {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Nutrition Database Analysis</h1>
+    <p>Five analyses on the USDA FoodData Central dataset (SR Legacy, 7,793 foods) — protein efficiency, hidden sugar, a composite nutrient density score, macro distribution, and nutrient co-occurrence.</p>
+    <div class="meta">Python · pandas · plotly · seaborn · scikit-learn &nbsp;·&nbsp; <a href="https://github.com/ivnyam/nutrition-analysis">View source on GitHub →</a></div>
+  </header>
+
+  <section class="analysis">
+    <div class="tag">01 · Protein Efficiency</div>
+    <h2>Which foods deliver the most protein per calorie?</h2>
+    <p class="finding">Finfish and shellfish lead at 16.4g protein per 100 kcal — nearly 3× the density of vegetables (5.75g), even though vegetables still rank in the top 10 groups.</p>
+    <div class="interactive-card">
+      <span>Interactive scatter — hover any point for the food name, filter by food group in the legend.</span>
+      <a href="outputs/a1_protein_scatter.html">Open chart →</a>
+    </div>
+  </section>
+
+  <section class="analysis">
+    <div class="tag">02 · The Sugar Trap</div>
+    <h2>Category labels hide as much as they reveal</h2>
+    <p class="finding">Breakfast cereals, snacks, and baked products all average 16–18g sugar per 100g — comparable to fruit juice. The real outliers are individual items: powdered drink mixes and dried fruit hit 80–97g/100g.</p>
+    <div class="visual">
+      <img src="outputs/a2_sugar_boxplot.png" alt="Sugar content distribution by food group" />
+    </div>
+  </section>
+
+  <section class="analysis">
+    <div class="tag">03 · Nutrient Density Score</div>
+    <h2>A composite score built from 8 nutrients</h2>
+    <p class="finding">Ranking all 7,793 foods by protein + fibre + vitamins − sugar − fat − sodium surfaces dried spices and herbs at the top — a genuine artifact of per-100g scoring, since nobody eats 100g of dried thyme in one sitting.</p>
+    <div class="visual">
+      <img src="outputs/a3_nutrient_density.png" alt="Top 25 most nutrient-dense foods" />
+    </div>
+  </section>
+
+  <section class="analysis">
+    <div class="tag">04 · Macro Distribution</div>
+    <h2>How protein/carb/fat ratios shift across food groups</h2>
+    <p class="finding">A ~55 percentage-point swing in protein share alone: finfish sits at 68% protein / 4% carbs / 28% fat, while vegetables flip to 14% protein / 74% carbs / 12% fat.</p>
+    <div class="interactive-card">
+      <span>Interactive stacked bar — hover any segment for the exact percentage.</span>
+      <a href="outputs/a4_macro_distribution.html">Open chart →</a>
+    </div>
+  </section>
+
+  <section class="analysis">
+    <div class="tag">05 · Nutrient Correlations</div>
+    <h2>What co-occurs, and what doesn't</h2>
+    <p class="finding">Fat tracks calories tightly (r=0.83) as expected — but fat and cholesterol barely correlate here (r=0.09), and sugar/fibre show a weak positive relationship (r=0.10) rather than the trade-off conventional wisdom predicts.</p>
+    <div class="visual">
+      <img src="outputs/a5_nutrient_heatmap.png" alt="Nutrient correlation matrix" />
+    </div>
+  </section>
+
+  <footer>
+    Full write-up, methodology, and the source notebook are in the <a href="https://github.com/ivnyam/nutrition-analysis">GitHub repository</a>.
+  </footer>
+
+</div>
+</body>
+</html>
