@@ -1,4 +1,4 @@
-# Nutrition Database Analysis
+# USDA Nutrition Database Analysis
 
 **Tools I used:** Python · pandas · plotly · seaborn · scikit-learn
 **Dataset:** USDA FoodData Central (April 2026 release), which was filtered to SR Legacy (Historic data on food components).
