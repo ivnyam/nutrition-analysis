@@ -2,8 +2,8 @@
 
 **Tools I used:** Python · pandas · plotly · seaborn · scikit-learn
 **Dataset:** USDA FoodData Central (April 2026 release), which was filtered to SR Legacy (Historic data on food components).
-**7,793 well-tested reference foods, 11 core nutrients
-**
+7,793 well-tested reference foods, 11 core nutrients.
+
 
 ## Why this project
 
